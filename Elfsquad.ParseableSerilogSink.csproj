@@ -11,9 +11,9 @@
         <Authors>stanvanrooy</Authors>
         <Company>Elfsquad</Company>
         <PackageProjectUrl>https://github.com/Elfsquad/Elfsquad.ParseableSerilogSink</PackageProjectUrl>
-        <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
         <LangVersion>11.0</LangVersion>
         <EnablePackageValidation>true</EnablePackageValidation>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
     </PropertyGroup>
 
     <ItemGroup>
@@ -26,6 +26,4 @@
         <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
       </PackageReference>
     </ItemGroup>
-
-
 </Project>
