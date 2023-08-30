@@ -1,10 +1,9 @@
 ﻿using System.Text;
-
-namespace Elfsquad.ParseableSerilogSink;
-
 using Newtonsoft.Json;
 using Serilog.Events;
 using Serilog.Sinks.PeriodicBatching;
+
+namespace Elfsquad.ParseableSerilogSink;
 
 public class ParseableSink : IBatchedLogEventSink, IDisposable, IAsyncDisposable
 {
@@ -52,6 +51,7 @@ public class ParseableSink : IBatchedLogEventSink, IDisposable, IAsyncDisposable
     private Dictionary<string, object> CreateDictionary(LogEvent logEvent)
     {
         var properties = new Dictionary<string, object>();
+        LogException(logEvent, properties);
 
         properties["level"] = logEvent.Level.ToString();
         properties["message"] = logEvent.RenderMessage();
@@ -96,6 +96,17 @@ public class ParseableSink : IBatchedLogEventSink, IDisposable, IAsyncDisposable
         }
 
         return properties;
+    }
+    
+    private static void LogException(LogEvent logEvent, Dictionary<string, object> values)
+    {
+        if (logEvent.Exception == null) return;
+
+        values.Add("exception_message", logEvent.Exception.Message);
+        values.Add("exception_type", logEvent.Exception.GetType().Name);
+        if (!string.IsNullOrWhiteSpace(logEvent.Exception.StackTrace))
+            values.Add("exception_stack_trace", logEvent.Exception.StackTrace.Replace("\"", "'"));
+        values.Add("event_type", "exception");
     }
 
     public Task OnEmptyBatchAsync()
