@@ -106,7 +106,7 @@ public class ParseableSink : IBatchedLogEventSink, IDisposable, IAsyncDisposable
         values.Add("exception_type", logEvent.Exception.GetType().Name);
         if (!string.IsNullOrWhiteSpace(logEvent.Exception.StackTrace))
             values.Add("exception_stack_trace", logEvent.Exception.StackTrace.Replace("\"", "'"));
-        values.Add("event_type", "exception");
+        values.TryAdd("event_type", "exception");
     }
 
     public Task OnEmptyBatchAsync()
