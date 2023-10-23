@@ -51,7 +51,6 @@ public class ParseableSink : IBatchedLogEventSink, IDisposable, IAsyncDisposable
     private Dictionary<string, object> CreateDictionary(LogEvent logEvent)
     {
         var properties = new Dictionary<string, object>();
-        LogException(logEvent, properties);
 
         properties["level"] = logEvent.Level.ToString();
         properties["message"] = logEvent.RenderMessage();
@@ -94,6 +93,8 @@ public class ParseableSink : IBatchedLogEventSink, IDisposable, IAsyncDisposable
                     break;
             }
         }
+        
+        LogException(logEvent, properties);
 
         return properties;
     }
