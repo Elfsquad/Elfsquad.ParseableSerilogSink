@@ -91,6 +91,9 @@ public class ParseableSink : IBatchedLogEventSink, IDisposable, IAsyncDisposable
                 case DateTimeOffset dateTimeOffsetValue:
                     properties.Add(property.Key, dateTimeOffsetValue.ToString("o"));
                     break;
+                case Enum enumValue:
+                    properties.Add(property.Key, enumValue.ToString());
+                    break;
             }
         }
         
